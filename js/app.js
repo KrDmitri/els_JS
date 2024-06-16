@@ -1,10 +1,14 @@
 document.getElementById('elsForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
+    console.time("executionTime");
+
     const formData = {
+        productCode: document.getElementById('productCode').value,
         volatility: document.getElementById('volatility').value,
         interestRate: document.getElementById('interestRate').value,
         redemptionDates: [
+            document.getElementById('redemptionDate0').value,
             document.getElementById('redemptionDate1').value,
             document.getElementById('redemptionDate2').value,
             document.getElementById('redemptionDate3').value,
@@ -23,15 +27,18 @@ document.getElementById('elsForm').addEventListener('submit', function(event) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Success:', data);
+        // console.log('Success:', data);
         document.getElementById('result').textContent = String(Math.round(Number(JSON.stringify(data['answer'])))) + "원";
+        console.timeEnd("executionTime");
     })
     .catch((error) => {
         console.error('Error:', error);
         alert('오류가 발생했습니다. 다시 시도해주세요.');
     });
 
-    console.log(formData['volatility']);
-    console.log(formData['interestRate']);
-    console.log(formData['redemptionDates']);
+    
+
+    // console.log(formData['volatility']);
+    // console.log(formData['interestRate']);
+    // console.log(formData['redemptionDates']);
 });
